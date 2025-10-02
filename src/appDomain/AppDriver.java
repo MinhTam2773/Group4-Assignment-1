@@ -32,7 +32,7 @@ public class AppDriver
 		// algorithm on a list of comparables to sort using either the
 		// natural order (comparable) or other orders (comparators)
 		
-		System.out.println("Hello world");
+		System.out.println("Test Test");
 
 	}
 
