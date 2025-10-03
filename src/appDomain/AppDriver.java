@@ -29,6 +29,7 @@ public class AppDriver
 		String compareType;
 		String sortType;
 		
+<<<<<<< HEAD
 		for (String arg : args) {
 			if (arg.startsWith("-f")) {
 				filename = arg.substring(2);//get filename after "-f"
@@ -43,6 +44,10 @@ public class AppDriver
 				System.out.println("Using " + sortType);
 			}
 		}
+=======
+		System.out.println("Test Test");
+
+>>>>>>> e819dc5190f2ec4c05c0961bcf68ef7562c26f85
 	}
 
 }
