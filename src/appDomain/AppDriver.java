@@ -1,5 +1,7 @@
 package appDomain;
 
+import utilities.FileHandler;
+
 /**
  * <p>
  * This application driver code is designed to be used as a basis for the
@@ -17,23 +19,30 @@ public class AppDriver
 	 */
 	public static void main( String[] args )
 	{
-		// TODO Auto-generated method stub
-
-		// refer to demo00 BasicFileIO.java for a simple example on how to
-		// read data from a text file
-
-		// refer to demo01 Test.java for an example on how to parse command
-		// line arguments and benchmarking tests
-
-		// refer to demo02 Student.java for comparable implementation, and
-		// NameCompare.java or GradeCompare for comparator implementations
-
-		// refer to demo02 KittySort.java on how to use a custom sorting
-		// algorithm on a list of comparables to sort using either the
-		// natural order (comparable) or other orders (comparators)
+		/*
+		 * in the arugment tab in Run Configuration, try
+		 * 	-fres/shapes1.tx -theight -squicksort 
+		 * (-fres/shapes1.txt is not an allowed format according to the doc,
+		 *  it should be -f"res\shapes1.txt" )
+		 */
+		String filename;
+		String compareType;
+		String sortType;
 		
-		System.out.println("Test Test");
-
+		for (String arg : args) {
+			if (arg.startsWith("-f")) {
+				filename = arg.substring(2);//get filename after "-f"
+				FileHandler.parse(filename);
+			} 
+			if (arg.startsWith("-t")) {
+				compareType = arg.substring(2); //get compareType after "-t"
+				System.out.println("\nCompare by " + compareType);
+			}
+			if (arg.startsWith("-s")) {
+				sortType = arg.substring(2); //get sortType after "-s"
+				System.out.println("Using " + sortType);
+			}
+		}
 	}
 
 }
