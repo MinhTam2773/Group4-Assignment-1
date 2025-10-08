@@ -1,6 +1,7 @@
 package appDomain;
 
 import utilities.FileHandler;
+import utilities.Sorter;
 
 /**
  * <p>
