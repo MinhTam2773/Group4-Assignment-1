@@ -4,8 +4,7 @@ import java.util.Comparator;
 import utilities.FileHandler;
 import utilities.Sorter;
 import shapes.Shape;
-import comparators.BaseAreaCompare;
-import comparators.VolumeCompare;
+import comparators.ShapeComparator;
 
 public class AppDriver {
 
@@ -14,20 +13,14 @@ public class AppDriver {
         String compareType = "h"; // default: compare by height
         String sortType = "b";    // default: bubble sort
 
-        // Debug: show runtime arguments
-        System.out.println("DEBUG: Runtime args:");
-        for (int i = 0; i < args.length; i++) {
-            System.out.println("  arg[" + i + "] = '" + args[i] + "'");
-        }
-        System.out.println("DEBUG: user.dir = " + System.getProperty("user.dir"));
-
         // Parse command-line arguments
         for (String arg : args) {
             if (arg == null || arg.isEmpty()) continue;
 
-            // Normalize dashes/quotes
+            // Normalize dashes/quotes and Windows paths
             arg = arg.replace('–', '-').replace('—', '-')
-                     .replace("\"", "").replace("“", "").replace("”", "").trim();
+                     .replace("\"", "").replace("“", "").replace("”", "").trim()
+                     .replace("\\", "/");  // convert backslashes to forward slashes
 
             String lower = arg.toLowerCase();
 
@@ -50,23 +43,26 @@ public class AppDriver {
             return;
         }
 
-        // Load shapes (FileHandler handles all path resolution: relative, res/, jar, absolute)
+        // Normalize filename again in case it contains backslashes
+        filename = filename.replace("\\", "/");
+
+        // Load shapes
         Shape[] shapes = FileHandler.parse(filename);
         if (shapes == null || shapes.length == 0) {
             System.out.println("❌ No shapes loaded, exiting...");
             return;
         }
 
-        // Select comparator
+        // Select comparator using ShapeComparator
         Comparator<Shape> comp;
         switch (compareType) {
-            case "v": comp = new VolumeCompare(); break;
-            case "a": comp = new BaseAreaCompare(); break;
+            case "v": comp = new ShapeComparator("V"); break;
+            case "a": comp = new ShapeComparator("A"); break;
             case "h":
-            default:  comp = Comparator.naturalOrder(); break;
+            default:  comp = Comparator.naturalOrder(); break; // default: height
         }
 
-        System.out.println("\n📊 Compare by: " + compareType.toUpperCase());
+        System.out.println("📊 Compare by: " + compareType.toUpperCase());
         System.out.println("⚙️ Sort type: " + sortType.toUpperCase());
         System.out.println("📂 File: " + filename);
 
@@ -86,9 +82,9 @@ public class AppDriver {
         }
         long end = System.currentTimeMillis();
 
-        System.out.println("\n⏱️ Sorting completed in " + (end - start) + " ms\n");
+        System.out.println("⏱️ Sorting completed in " + (end - start) + " ms\n");
 
-        // Print a few shapes for verification
+        // Print first, last, and every 1000th shape for verification
         for (int i = 0; i < shapes.length; i++) {
             if (i == 0 || i == shapes.length - 1 || i % 1000 == 0) {
                 System.out.println(i + ": " + shapes[i]);
