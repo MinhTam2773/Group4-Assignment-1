@@ -21,7 +21,7 @@ public class Sorter {
 			break;
 		case "i": 
 			start = System.currentTimeMillis();
-//			insertionSort();
+			insertionSort(shapes);
 			end = System.currentTimeMillis();
 			break;
 		case "s":
@@ -73,8 +73,16 @@ public class Sorter {
 		
 	}
 	
-	private void insertionSort() {
+	private void insertionSort(Shape[] shapes) {
+		int j;
 		
+		for (int i = 1; i <= shapes.length - 1; i++) {
+			j = i;
+			while (j > 0 && comparator.compare(shapes[j - 1], shapes[j]) < 0) {
+				swap(shapes, j - 1, j);
+				j--;
+			}
+		}
 	}
 	
 	private void selectionSort(Shape[] shapes) {
