@@ -62,27 +62,27 @@ public class Sorter {
 		
 	}
 	
-	public static void selectionSort(Shape[] shapes) {
-//        int n = array.length;
-//
-//        for (int i = 0; i < n - 1; i++) {
-//            int minIndex = i;
-//
-//            for (int j = i + 1; j < n; j++) {
-//                // Use comparator to determine order
-//                if (comp.compare(array[j], array[minIndex]) < 0) {
-//                    minIndex = j;
-//                }
-//            }
-//
-//            // Swap array[i] and array[minIndex] if needed
-//            if (minIndex != i) {
-//                Shape temp = array[i];
-//                array[i] = array[minIndex];
-//                array[minIndex] = temp;
-//            }
-//        }
-    }
+	private void selectionSort(Shape[] shapes) {
+	    int n = shapes.length;
+
+	    for (int i = 0; i < n - 1; i++) {
+	        int minIndex = i;
+
+	        for (int j = i + 1; j < n; j++) {
+	            // Use instance comparator
+	            if (comparator.compare(shapes[j], shapes[minIndex]) < 0) {
+	                minIndex = j;
+	            }
+	        }
+
+	        // Swap shapes[i] and shapes[minIndex] if needed
+	        if (minIndex != i) {
+	            Shape temp = shapes[i];
+	            shapes[i] = shapes[minIndex];
+	            shapes[minIndex] = temp;
+	        }
+	    }
+	}
 	
 	public void mergeSort(Shape[] shapes) {
 		if(shapes == null || shapes.length < 2) {
