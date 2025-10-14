@@ -1,7 +1,17 @@
 package utilities;
 
+import comparators.ShapeComparator;
+import shapes.Shape;
+
 public class Sorter {
-	public static void bubbleSort(Double[] array) {
+	private static ShapeComparator comparator;
+	
+	public Sorter(ShapeComparator comparator) {
+		Sorter.comparator = comparator;
+	}
+		
+	private static void bubbleSort(Double[] array) {
+		
 		int n = array.length;
 		boolean swap;
 		
@@ -23,11 +33,11 @@ public class Sorter {
 		
 	}
 	
-	public static void insertionSort() {
+	private static void insertionSort() {
 		
 	}
 	
-	public static void selectionSort() {
+	private static void selectionSort() {
 		
 	}
 	
@@ -35,11 +45,11 @@ public class Sorter {
 		
 	}
 	
-	public static void quickSort() {
+	private static void quickSort() {
 		
 	}
 	
-	public static void heapSort(int[] arr) {
+	private static void heapSort(int[] arr) {
 		buildMinHeap(arr);
 		
 		for (int i = arr.length - 1; i >= 0; i--) {
