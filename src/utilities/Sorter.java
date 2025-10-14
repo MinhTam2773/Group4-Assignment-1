@@ -4,104 +4,14 @@ import comparators.ShapeComparator;
 import shapes.Shape;
 
 public class Sorter {
-<<<<<<< HEAD
     private ShapeComparator comparator;
     private long start;
     private long end;
-=======
-	private ShapeComparator comparator;
-	private long start;
-	private long end;
-	
-	public Sorter(ShapeComparator comparator) {
-		this.comparator = comparator;
-	}
-	
-	public void sortUsing(String sortType, Shape[] shapes) {
-		switch(sortType) {
-		case "b": 
-			start = System.currentTimeMillis();
-			bubbleSort(shapes);
-			end = System.currentTimeMillis();
-			break;
-		case "i": 
-			start = System.currentTimeMillis();
-			insertionSort(shapes);
-			end = System.currentTimeMillis();
-			break;
-		case "s":
-			start = System.currentTimeMillis();
-			selectionSort(shapes);
-			end = System.currentTimeMillis();
-			break;
-		case "m":
-			start = System.currentTimeMillis();
-			mergeSort(shapes);
-			end = System.currentTimeMillis();
-			break;
-		case "q":
-			start = System.currentTimeMillis();
-//			quickSort();
-			end = System.currentTimeMillis();
-			break;
-		case "h":
-			start = System.currentTimeMillis();
-			heapSort(shapes);
-			end = System.currentTimeMillis();
-			break;
-		default:
-			System.out.println("Please choose a valid sort type");
-		}
-		System.out.println("⏱️ Sorting completed in " + (end - start) + " ms\n");
-	}
-		
-	private void bubbleSort(Shape[] shapes) {
-		//creates shape length and bool called swap to check whether it was
-		int n = shapes.length;
-		boolean swap;
-		//counts how many times it has been through the array
-		for (int i = 0; i < n-1; i++) {
-			swap = false;
-			//this loop sorts out the array (descending wise) by subtracting the array that was already sorted leaving only the non sorted arrays
-			for (int j = 0; j< n-i-1; j++) {
-				//if an array is less than the array after it it switches the spot of the array
-				if (comparator.compare(shapes[j], shapes[j + 1]) < 0) {
-					Shape temp = shapes[j];
-					shapes[j] = shapes[j+1];
-					shapes[j+1] = temp;
-					//checks whether if there was a swap
-					swap = true;
-				}
-			}
-			//if the swaps end than swap detects it and breaks the for loop
-			if (!swap) {
-				break;
-			}
-		}
-		
-	}
-	
-	private void insertionSort(Shape[] shapes) {
-		int j;
-		
-		for (int i = 1; i <= shapes.length - 1; i++) {
-			j = i;
-			while (j > 0 && comparator.compare(shapes[j - 1], shapes[j]) < 0) {
-				swap(shapes, j - 1, j);
-				j--;
-			}
-		}
-	}
-	
-	private void selectionSort(Shape[] shapes) {
-	    int n = shapes.length;
->>>>>>> branch 'main' of https://github.com/MinhTam2773/Group4-Assignment-1.git
 
     public Sorter(ShapeComparator comparator) {
         this.comparator = comparator;
     }
 
-<<<<<<< HEAD
     public void sortUsing(String sortType, Shape[] shapes) {
         switch (sortType) {
             case "b":
@@ -139,14 +49,6 @@ public class Sorter {
         }
         System.out.println("⏱️ Sorting completed in " + (end - start) + " ms\n");
     }
-=======
-	        for (int j = i + 1; j < n; j++) {
-	            // Use instance comparator
-	            if (comparator.compare(shapes[j], shapes[minIndex]) > 0) {
-	                minIndex = j;
-	            }
-	        }
->>>>>>> branch 'main' of https://github.com/MinhTam2773/Group4-Assignment-1.git
 
     private void bubbleSort(Shape[] shapes) {
         int n = shapes.length;
@@ -173,7 +75,6 @@ public class Sorter {
         }
     }
 
-<<<<<<< HEAD
     private void selectionSort(Shape[] shapes) {
         int n = shapes.length;
         for (int i = 0; i < n - 1; i++) {
@@ -295,86 +196,3 @@ public class Sorter {
         }
     }
 }
-=======
-	        while (j < n2) {
-	            shapes[k++] = rightArr[j++];
-	        }
-	    	
-	    }catch(Exception e){
-	    	e.printStackTrace();
-	    }
-	}
-	
-	private void quickSort(Shape[] shapes) {
-		if (shapes == null || shapes.length < 2) {
-			return;
-		}
-		quickSortRecursive(shapes, 0, shapes.length - 1);
-	}
-	
-	private void quickSortRecursive(Shape[] shapes, int low, int high) {
-		if (low < high) {
-			int pivotIndex = partition(shapes, low, high);
-	        quickSortRecursive(shapes, low, pivotIndex - 1);
-	        quickSortRecursive(shapes, pivotIndex + 1, high);
-		}
-		
-	}
-
-	private int partition(Shape[] shapes, int low, int high) {
-		Shape pivot = shapes[high];
-		int i = low -1;
-		
-		for (int j = low; j < high; j++) {
-	        try {
-	            if (comparator.compare(shapes[j], pivot) < 0) {
-	                i++;
-	                swap(shapes, i, j);
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-	    swap(shapes, i + 1, high);
-	    return i + 1;
-	}
-
-	private void heapSort(Shape[] shapes) {
-		buildMinHeap(shapes);
-		
-		for (int i = shapes.length - 1; i >= 0; i--) {
-			swap(shapes, 0, i);
-			minHeapify(shapes, i, 0);
-		}
-	}
-	private void buildMinHeap(Shape[] shapes) {
-		int n = shapes.length;
-		for (int i = (n / 2) - 1; i >= 0; i--) {
-			minHeapify(shapes, n, i);
-		}
-	}
-	private void minHeapify(Shape[] shapes, int size, int i) {
-		int smallest = i;
-		int left = i * 2 + 1;
-		int right = i * 2 + 2;
-		
-		if (left < size && comparator.compare(shapes[smallest], shapes[left]) > 0 ) {
-			smallest = left;
-		}
-		if (right < size && comparator.compare(shapes[smallest], shapes[right]) > 0) {
-			smallest = right;
-		}
-		
-		if (i != smallest) {
-			swap(shapes, smallest, i);
-			minHeapify(shapes, size, smallest);
-		}
-	}
-	private void swap(Shape[] shapes, int i, int j) {
-		Shape temp = shapes[i];
-		shapes[i] = shapes[j];
-		shapes[j] = temp;
-	}
-}
->>>>>>> branch 'main' of https://github.com/MinhTam2773/Group4-Assignment-1.git
