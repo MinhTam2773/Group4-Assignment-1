@@ -1,10 +1,9 @@
 package appDomain;
 
-import java.util.Comparator;
-import utilities.FileHandler;
-import utilities.Sorter;
 import shapes.Shape;
 import comparators.ShapeComparator;
+import utilities.FileHandler;
+import utilities.Sorter;
 
 public class AppDriver {
 
@@ -20,7 +19,7 @@ public class AppDriver {
             // Normalize dashes/quotes and Windows paths
             arg = arg.replace('–', '-').replace('—', '-')
                      .replace("\"", "").replace("“", "").replace("”", "").trim()
-                     .replace("\\", "/");  // convert backslashes to forward slashes
+                     .replace("\\", "/");
 
             String lower = arg.toLowerCase();
 
@@ -28,7 +27,6 @@ public class AppDriver {
             if (lower.equals("java") || lower.equals("-jar") || lower.endsWith(".jar"))
                 continue;
 
-            // Case-insensitive -f / -F
             if (lower.startsWith("-f")) {
                 filename = arg.substring(2).trim();
             } else if (lower.startsWith("-t")) {
@@ -43,7 +41,6 @@ public class AppDriver {
             return;
         }
 
-        // Normalize filename again in case it contains backslashes
         filename = filename.replace("\\", "/");
 
         // Load shapes
@@ -53,33 +50,23 @@ public class AppDriver {
             return;
         }
 
-        // Select comparator using ShapeComparator
-        Comparator<Shape> comp;
+        // Create comparator
+        ShapeComparator comparator;
         switch (compareType) {
-            case "v": comp = new ShapeComparator("V"); break;
-            case "a": comp = new ShapeComparator("A"); break;
+            case "v": comparator = new ShapeComparator("V"); break;
+            case "a": comparator = new ShapeComparator("A"); break;
             case "h":
-            default:  comp = Comparator.naturalOrder(); break; // default: height
+            default:  comparator = new ShapeComparator("H"); break; // default: height
         }
 
         System.out.println("📊 Compare by: " + compareType.toUpperCase());
         System.out.println("⚙️ Sort type: " + sortType.toUpperCase());
         System.out.println("📂 File: " + filename);
 
-        // Sort and benchmark
+        // Sort
+        Sorter sorter = new Sorter(comparator);
         long start = System.currentTimeMillis();
-        switch (sortType) {
-//            case "b": Sorter.bubbleSort(shapes, comp); break;
-//            case "i": Sorter.insertionSort(shapes, comp); break;
-//            case "s": Sorter.selectionSort(shapes, comp); break;
-//            case "m": Sorter.mergeSort(shapes, comp); break;
-//            case "q": Sorter.quickSort(shapes, comp); break;
-//            case "h":
-//            case "z": Sorter.heapSort(shapes, comp); break;
-//            default:
-//                System.out.println("⚠️ Invalid sort type, using Bubble Sort.");
-//                Sorter.bubbleSort(shapes, comp);
-        }
+        sorter.sortUsing(sortType, shapes);
         long end = System.currentTimeMillis();
 
         System.out.println("⏱️ Sorting completed in " + (end - start) + " ms\n");
