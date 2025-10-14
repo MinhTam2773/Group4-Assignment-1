@@ -15,26 +15,20 @@ public class FileHandler {
 
         // Clean file name (remove quotes and whitespace)
         fileName = fileName.replace("\"", "").trim();
-        System.out.println("DEBUG: cleaned fileName = '" + fileName + "'");
 
         File file = new File(fileName);
 
-        // Try direct path
-        System.out.println("DEBUG: trying direct path: " + file.getAbsolutePath());
-
         // If file doesn't exist, try additional locations
         if (!file.exists()) {
-            // 1️⃣ Relative to working directory
+            // Relative to working directory
             File userDirRelative = new File(System.getProperty("user.dir"), fileName);
-            System.out.println("DEBUG: trying user.dir path: " + userDirRelative.getAbsolutePath());
             if (userDirRelative.exists()) file = userDirRelative;
 
-            // 2️⃣ Relative to user.dir/res
+            // Relative to user.dir/res
             File resRelative = new File(System.getProperty("user.dir") + File.separator + "res", fileName);
-            System.out.println("DEBUG: trying user.dir/res path: " + resRelative.getAbsolutePath());
             if (resRelative.exists()) file = resRelative;
 
-            // 3️⃣ Relative to JAR directory
+            // Relative to JAR directory
             try {
                 String jarDir = new File(FileHandler.class.getProtectionDomain()
                         .getCodeSource()
@@ -42,7 +36,6 @@ public class FileHandler {
                         .toURI())
                         .getParent();
                 File jarRelative = new File(jarDir, fileName);
-                System.out.println("DEBUG: trying jar-relative path: " + jarRelative.getAbsolutePath());
                 if (jarRelative.exists()) file = jarRelative;
             } catch (Exception e) {
                 // ignore
@@ -50,11 +43,9 @@ public class FileHandler {
         }
 
         if (!file.exists()) {
-            System.out.println("❌ File not found after all attempts. Last tried path: " + file.getAbsolutePath());
+            System.out.println("❌ File not found: " + file.getAbsolutePath());
             return new Shape[0];
         }
-
-        System.out.println("📂 Opening file: " + file.getAbsolutePath());
 
         // Parse shapes
         try (Scanner input = new Scanner(file)) {
@@ -133,12 +124,6 @@ public class FileHandler {
             }
 
             System.out.println("✅ File loaded successfully: " + index + " shapes parsed.");
-
-            // Optional: print all shapes
-            for (int i = 0; i < index; i++) {
-                if (shapes[i] != null)
-                    System.out.println("[" + i + "] " + shapes[i].getClass().getSimpleName() + " → " + shapes[i]);
-            }
 
             return shapes;
 

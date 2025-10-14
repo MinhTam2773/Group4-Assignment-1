@@ -5,6 +5,8 @@ import shapes.Shape;
 
 public class Sorter {
 	private ShapeComparator comparator;
+	private long start;
+	private long end;
 	
 	public Sorter(ShapeComparator comparator) {
 		this.comparator = comparator;
@@ -13,30 +15,42 @@ public class Sorter {
 	public void sortUsing(String sortType, Shape[] shapes) {
 		switch(sortType) {
 		case "b": 
+			start = System.currentTimeMillis();
 			bubbleSort(shapes);
+			end = System.currentTimeMillis();
 			break;
 		case "i": 
+			start = System.currentTimeMillis();
 //			insertionSort();
+			end = System.currentTimeMillis();
 			break;
 		case "s":
+			start = System.currentTimeMillis();
 			selectionSort(shapes);
+			end = System.currentTimeMillis();
 			break;
 		case "m":
+			start = System.currentTimeMillis();
 			mergeSort(shapes);
+			end = System.currentTimeMillis();
 			break;
 		case "q":
+			start = System.currentTimeMillis();
 //			quickSort();
+			end = System.currentTimeMillis();
 			break;
 		case "h":
+			start = System.currentTimeMillis();
 			heapSort(shapes);
+			end = System.currentTimeMillis();
 			break;
 		default:
 			System.out.println("Please choose a valid sort type");
 		}
+		System.out.println("⏱️ Sorting completed in " + (end - start) + " ms\n");
 	}
 		
 	private void bubbleSort(Shape[] shapes) {
-		
 		int n = shapes.length;
 		boolean swap;
 		
@@ -55,11 +69,10 @@ public class Sorter {
 				break;
 			}
 		}
-		
 	}
 	
 	private void insertionSort() {
-		
+		// implementation left empty
 	}
 	
 	private void selectionSort(Shape[] shapes) {
@@ -69,13 +82,11 @@ public class Sorter {
 	        int minIndex = i;
 
 	        for (int j = i + 1; j < n; j++) {
-	            // Use instance comparator
 	            if (comparator.compare(shapes[j], shapes[minIndex]) < 0) {
 	                minIndex = j;
 	            }
 	        }
 
-	        // Swap shapes[i] and shapes[minIndex] if needed
 	        if (minIndex != i) {
 	            Shape temp = shapes[i];
 	            shapes[i] = shapes[minIndex];
@@ -85,11 +96,8 @@ public class Sorter {
 	}
 	
 	public void mergeSort(Shape[] shapes) {
-		if(shapes == null || shapes.length < 2) {
-			return;
-		}
+		if(shapes == null || shapes.length < 2) return;
 		mergeSortRecursive(shapes, 0, shapes.length -1);
-		
 	}
 	private void mergeSortRecursive(Shape[] shapes, int left, int right) {
 		if(left < right) {
@@ -98,7 +106,6 @@ public class Sorter {
 			mergeSortRecursive(shapes, mid+1, right);
 			merge(shapes, left, mid, right);
 		}
-		
 	}
 	
 	private void merge(Shape[] shapes, int left, int mid, int right) {
@@ -108,12 +115,8 @@ public class Sorter {
 	    Shape[] leftArr = new Shape[n1];
 	    Shape[] rightArr = new Shape[n2];
 	    
-	    for (int i = 0; i < n1; i++) {
-	        leftArr[i] = shapes[left + i];
-	    }
-	    for (int j = 0; j < n2; j++) {
-	        rightArr[j] = shapes[mid + 1 + j];
-	    }
+	    for (int i = 0; i < n1; i++) leftArr[i] = shapes[left + i];
+	    for (int j = 0; j < n2; j++) rightArr[j] = shapes[mid + 1 + j];
 	    
 	    int i = 0, j = 0, k = left;
 	    
@@ -129,26 +132,20 @@ public class Sorter {
 	            k++;
 	        }
 
-	        while (i < n1) {
-	            shapes[k++] = leftArr[i++];
-	        }
-
-	        while (j < n2) {
-	            shapes[k++] = rightArr[j++];
-	        }
+	        while (i < n1) shapes[k++] = leftArr[i++];
+	        while (j < n2) shapes[k++] = rightArr[j++];
 	    	
-	    }catch(Exception e){
+	    } catch(Exception e){
 	    	e.printStackTrace();
 	    }
 	}
 	
 	private void quickSort() {
-		
+		// implementation left empty
 	}
 	
 	private void heapSort(Shape[] shapes) {
 		buildMinHeap(shapes);
-		
 		for (int i = shapes.length - 1; i >= 0; i--) {
 			swap(shapes, 0, i);
 			minHeapify(shapes, i, 0);
@@ -165,12 +162,10 @@ public class Sorter {
 		int left = i * 2 + 1;
 		int right = i * 2 + 2;
 		
-		if (left < size && comparator.compare(shapes[smallest], shapes[left]) > 0 ) {
+		if (left < size && comparator.compare(shapes[smallest], shapes[left]) > 0 )
 			smallest = left;
-		}
-		if (right < size && comparator.compare(shapes[smallest], shapes[right]) > 0) {
+		if (right < size && comparator.compare(shapes[smallest], shapes[right]) > 0)
 			smallest = right;
-		}
 		
 		if (i != smallest) {
 			swap(shapes, smallest, i);
@@ -182,4 +177,18 @@ public class Sorter {
 		shapes[i] = shapes[j];
 		shapes[j] = temp;
 	}
+
+    // --- NEW METHOD ---
+    public String getSortName(String sortType) {
+        if (sortType == null) return "Unknown Sort";
+        switch (sortType.toLowerCase()) {
+            case "b": return "Bubble Sort";
+            case "i": return "Insertion Sort";
+            case "s": return "Selection Sort";
+            case "m": return "Merge Sort";
+            case "q": return "Quick Sort";
+            case "h": return "Heap Sort";
+            default: return "Unknown Sort";
+        }
+    }
 }

@@ -15,6 +15,7 @@ public class AppDriver {
         // Parse command-line arguments
         for (String arg : args) {
             if (arg == null || arg.isEmpty()) continue;
+
             arg = arg.replace('–', '-').replace('—', '-')
                      .replace("\"", "").replace("“", "").replace("”", "").trim()
                      .replace("\\", "/");
@@ -49,53 +50,34 @@ public class AppDriver {
         // Create comparator
         ShapeComparator comparator = new ShapeComparator(compareType);
 
-        // Sort and benchmark
+        // Sort
         Sorter sorter = new Sorter(comparator);
         long start = System.currentTimeMillis();
         sorter.sortUsing(sortType, shapes);
         long end = System.currentTimeMillis();
 
-        // Determine label based on compareType
-        String label;
-        switch (compareType) {
-            case "h": label = "height"; break;
-            case "a": label = "area"; break;
-            case "v": label = "volume"; break;
-            default: label = "value"; break;
-        }
-
-        // Print first, last, and every 1000th element
+        // Print elements with proper suffix and value
         for (int i = 0; i < shapes.length; i++) {
-            if (i == 0 || i == shapes.length - 1 || i % 1000 == 0) {
-                Shape s = shapes[i];
-                double value;
-                switch (compareType) {
-                    case "h": value = s.getHeight(); break;
-                    case "a": value = s.calcBaseArea(); break;
-                    case "v": value = s.calcVolume(); break;
-                    default: value = s.getHeight(); break;
-                }
-                String ordinal = getOrdinal(i + 1);
-                System.out.println(ordinal + " element is: " 
-                                   + s.getClass().getSimpleName() + " " + label + ": " + value);
+            int pos = i + 1;
+            String suffix;
+            if (pos % 10 == 1 && pos % 100 != 11) suffix = "st";
+            else if (pos % 10 == 2 && pos % 100 != 12) suffix = "nd";
+            else if (pos % 10 == 3 && pos % 100 != 13) suffix = "rd";
+            else suffix = "th";
+
+            Shape s = shapes[i];
+            String value = "";
+            switch (compareType) {
+                case "h": value = "height: " + s.getHeight(); break;
+                case "a": value = "area: " + s.calcBaseArea(); break;
+                case "v": value = "volume: " + s.calcVolume(); break;
             }
+
+            System.out.println(pos + suffix + " element is: " + s.getClass().getSimpleName() + " " + value);
         }
 
-        // Print benchmark
+        // Show benchmark with full sort name
         System.out.println("\n⏱️ Sorting completed in " + (end - start) + " ms using " 
-                           + (sortType.equals("b") ? "Bubble Sort" : "Selected Algorithm"));
-    }
-
-    // Helper to get ordinal suffix
-    private static String getOrdinal(int number) {
-        if (number % 100 >= 11 && number % 100 <= 13) {
-            return number + "th";
-        }
-        switch (number % 10) {
-            case 1: return number + "st";
-            case 2: return number + "nd";
-            case 3: return number + "rd";
-            default: return number + "th";
-        }
+                            + sorter.getSortName(sortType) + ".");
     }
 }
