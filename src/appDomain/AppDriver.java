@@ -69,16 +69,16 @@ public class AppDriver {
         // Sort and benchmark
         long start = System.currentTimeMillis();
         switch (sortType) {
-            case "b": Sorter.bubbleSort(shapes, comp); break;
-            case "i": Sorter.insertionSort(shapes, comp); break;
-            case "s": Sorter.selectionSort(shapes, comp); break;
-            case "m": Sorter.mergeSort(shapes, comp); break;
-            case "q": Sorter.quickSort(shapes, comp); break;
-            case "h":
-            case "z": Sorter.heapSort(shapes, comp); break;
-            default:
-                System.out.println("⚠️ Invalid sort type, using Bubble Sort.");
-                Sorter.bubbleSort(shapes, comp);
+//            case "b": Sorter.bubbleSort(shapes, comp); break;
+//            case "i": Sorter.insertionSort(shapes, comp); break;
+//            case "s": Sorter.selectionSort(shapes, comp); break;
+//            case "m": Sorter.mergeSort(shapes, comp); break;
+//            case "q": Sorter.quickSort(shapes, comp); break;
+//            case "h":
+//            case "z": Sorter.heapSort(shapes, comp); break;
+//            default:
+//                System.out.println("⚠️ Invalid sort type, using Bubble Sort.");
+//                Sorter.bubbleSort(shapes, comp);
         }
         long end = System.currentTimeMillis();
 
