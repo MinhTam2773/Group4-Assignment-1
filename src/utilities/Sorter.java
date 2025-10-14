@@ -96,6 +96,7 @@ public class Sorter {
         }
     }
 
+
     public void mergeSort(Shape[] shapes) {
         if (shapes == null || shapes.length < 2) return;
         mergeSortRecursive(shapes, 0, shapes.length - 1);

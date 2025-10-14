@@ -69,7 +69,7 @@ public class AppDriver {
             }
 
             String elementLabel;
-            if (i == 0) elementLabel = "First element is:";
+            if (i == 0) elementLabel = "Firstst element is:";
             else if (i == shapes.length - 1) elementLabel = "Last element is:";
             else if ((i + 1) % 1000 == 0) elementLabel = (i + 1) + "th element is:";
             else continue; // skip all other elements
