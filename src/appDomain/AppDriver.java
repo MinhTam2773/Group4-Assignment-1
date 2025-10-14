@@ -45,7 +45,7 @@ public class AppDriver {
 
         System.out.println("📊 Compare by: " + compareType.toUpperCase());
         System.out.println("⚙️ Sort type: " + sortType.toUpperCase());
-        System.out.println("📂 File: " + filename);
+        System.out.println("📂 File: " + filename + "\n");
 
         // Create comparator and sorter
         ShapeComparator comparator = new ShapeComparator(compareType);

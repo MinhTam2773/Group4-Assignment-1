@@ -5,8 +5,6 @@ import shapes.Shape;
 
 public class Sorter {
     private ShapeComparator comparator;
-    private long start;
-    private long end;
 
     public Sorter(ShapeComparator comparator) {
         this.comparator = comparator;
@@ -15,39 +13,26 @@ public class Sorter {
     public void sortUsing(String sortType, Shape[] shapes) {
         switch (sortType) {
             case "b":
-                start = System.currentTimeMillis();
                 bubbleSort(shapes);
-                end = System.currentTimeMillis();
                 break;
             case "i":
-                start = System.currentTimeMillis();
                 insertionSort(shapes);
-                end = System.currentTimeMillis();
                 break;
             case "s":
-                start = System.currentTimeMillis();
                 selectionSort(shapes);
-                end = System.currentTimeMillis();
                 break;
             case "m":
-                start = System.currentTimeMillis();
                 mergeSort(shapes);
-                end = System.currentTimeMillis();
                 break;
             case "q":
-                start = System.currentTimeMillis();
                 quickSort(shapes);
-                end = System.currentTimeMillis();
                 break;
             case "h":
-                start = System.currentTimeMillis();
                 heapSort(shapes);
-                end = System.currentTimeMillis();
                 break;
             default:
                 System.out.println("Please choose a valid sort type");
         }
-        System.out.println("⏱️ Sorting completed in " + (end - start) + " ms\n");
     }
 
     private void bubbleSort(Shape[] shapes) {
