@@ -50,34 +50,39 @@ public class AppDriver {
         // Create comparator
         ShapeComparator comparator = new ShapeComparator(compareType);
 
-        // Sort
+        // Sort with timer
         Sorter sorter = new Sorter(comparator);
-        long start = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         sorter.sortUsing(sortType, shapes);
-        long end = System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
 
-        // Print elements with proper suffix and value
+        // Print first, last, and every exact 1000th element in tighter three-column layout
         for (int i = 0; i < shapes.length; i++) {
-            int pos = i + 1;
-            String suffix;
-            if (pos % 10 == 1 && pos % 100 != 11) suffix = "st";
-            else if (pos % 10 == 2 && pos % 100 != 12) suffix = "nd";
-            else if (pos % 10 == 3 && pos % 100 != 13) suffix = "rd";
-            else suffix = "th";
-
             Shape s = shapes[i];
-            String value = "";
+
+            String valueLabel;
             switch (compareType) {
-                case "h": value = "height: " + s.getHeight(); break;
-                case "a": value = "area: " + s.calcBaseArea(); break;
-                case "v": value = "volume: " + s.calcVolume(); break;
+                case "h": valueLabel = "height: " + String.format("%.6f", s.getHeight()); break;
+                case "a": valueLabel = "area: " + String.format("%.6f", s.calcBaseArea()); break;
+                case "v": valueLabel = "volume: " + String.format("%.6f", s.calcVolume()); break;
+                default: valueLabel = "";
             }
 
-            System.out.println(pos + suffix + " element is: " + s.getClass().getSimpleName() + " " + value);
+            String elementLabel;
+            if (i == 0) elementLabel = "First element is:";
+            else if (i == shapes.length - 1) elementLabel = "Last element is:";
+            else if ((i + 1) % 1000 == 0) elementLabel = (i + 1) + "th element is:";
+            else continue; // skip all other elements
+
+            String shapeName = "shape." + s.getClass().getSimpleName();
+
+            // Tighter three-column layout: element+is, shape, value
+            System.out.println(String.format("%-20s %-30s %s",
+                    elementLabel, shapeName, valueLabel));
         }
 
-        // Show benchmark with full sort name
-        System.out.println("\n⏱️ Sorting completed in " + (end - start) + " ms using " 
-                            + sorter.getSortName(sortType) + ".");
+        // Print benchmark at the very bottom
+        System.out.println("\n⏱️ Sorting completed in " + (endTime - startTime) + " ms using " 
+                + sorter.getSortName(sortType) + ".");
     }
 }
