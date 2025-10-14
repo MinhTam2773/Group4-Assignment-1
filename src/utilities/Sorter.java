@@ -26,7 +26,7 @@ public class Sorter {
 			break;
 		case "s":
 			start = System.currentTimeMillis();
-//			selectionSort();
+			selectionSort(shapes);
 			end = System.currentTimeMillis();
 			break;
 		case "m":
