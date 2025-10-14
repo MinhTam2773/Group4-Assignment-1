@@ -13,7 +13,7 @@ public class Sorter {
 	public void sortUsing(String sortType, Shape[] shapes) {
 		switch(sortType) {
 		case "b": 
-//			bubbleSort(shapes);
+			bubbleSort(shapes);
 			break;
 		case "i": 
 //			insertionSort();
@@ -22,7 +22,7 @@ public class Sorter {
 //			selectionSort();
 			break;
 		case "m":
-//			mergeSort();
+			mergeSort(shapes);
 			break;
 		case "q":
 //			quickSort();
@@ -35,18 +35,18 @@ public class Sorter {
 		}
 	}
 		
-	private void bubbleSort(Double[] array) {
+	private void bubbleSort(Shape[] shapes) {
 		
-		int n = array.length;
+		int n = shapes.length;
 		boolean swap;
 		
 		for (int i = 0; i < n-1; i++) {
 			swap = false;
 			for (int j = 0; j< n-i-1; j++) {
-				if (array[j] < array[j+1]) {
-					double temp = array[j];
-					array[j] = array[j+1];
-					array[j+1] = temp;
+				if (comparator.compare(shapes[j], shapes[j + 1]) < 0) {
+					Shape temp = shapes[j];
+					shapes[j] = shapes[j+1];
+					shapes[j+1] = temp;
 					
 					swap = true;
 				}
@@ -66,8 +66,62 @@ public class Sorter {
 		
 	}
 	
-	public void mergeSort() {
+	public void mergeSort(Shape[] shapes) {
+		if(shapes == null || shapes.length < 2) {
+			return;
+		}
+		mergeSortRecursive(shapes, 0, shapes.length -1);
 		
+	}
+	private void mergeSortRecursive(Shape[] shapes, int left, int right) {
+		if(left < right) {
+			int mid = (left+right)/2;
+			mergeSortRecursive(shapes, left, mid);
+			mergeSortRecursive(shapes, mid+1, right);
+			merge(shapes, left, mid, right);
+		}
+		
+	}
+	
+	private void merge(Shape[] shapes, int left, int mid, int right) {
+		int n1 = mid - left + 1;
+	    int n2 = right - mid;
+	    
+	    Shape[] leftArr = new Shape[n1];
+	    Shape[] rightArr = new Shape[n2];
+	    
+	    for (int i = 0; i < n1; i++) {
+	        leftArr[i] = shapes[left + i];
+	    }
+	    for (int j = 0; j < n2; j++) {
+	        rightArr[j] = shapes[mid + 1 + j];
+	    }
+	    
+	    int i = 0, j = 0, k = left;
+	    
+	    try {
+	    	while (i < n1 && j < n2) {
+	            if (comparator.compare(leftArr[i], rightArr[j]) < 0) {
+	                shapes[k] = leftArr[i];
+	                i++;
+	            } else {
+	                shapes[k] = rightArr[j];
+	                j++;
+	            }
+	            k++;
+	        }
+
+	        while (i < n1) {
+	            shapes[k++] = leftArr[i++];
+	        }
+
+	        while (j < n2) {
+	            shapes[k++] = rightArr[j++];
+	        }
+	    	
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
 	}
 	
 	private void quickSort() {
