@@ -1,6 +1,5 @@
 package appDomain;
 
-import java.io.File;
 import java.util.Comparator;
 import utilities.FileHandler;
 import utilities.Sorter;
@@ -12,22 +11,31 @@ public class AppDriver {
 
     public static void main(String[] args) {
         String filename = null;
-        String compareType = "h"; // default compare by height
-        String sortType = "b";    // default bubble sort
+        String compareType = "h"; // default: compare by height
+        String sortType = "b";    // default: bubble sort
 
+        // Debug: show runtime arguments
+        System.out.println("DEBUG: Runtime args:");
+        for (int i = 0; i < args.length; i++) {
+            System.out.println("  arg[" + i + "] = '" + args[i] + "'");
+        }
+        System.out.println("DEBUG: user.dir = " + System.getProperty("user.dir"));
+
+        // Parse command-line arguments
         for (String arg : args) {
             if (arg == null || arg.isEmpty()) continue;
 
-            // Normalize: handle weird dashes/quotes
+            // Normalize dashes/quotes
             arg = arg.replace('–', '-').replace('—', '-')
                      .replace("\"", "").replace("“", "").replace("”", "").trim();
 
             String lower = arg.toLowerCase();
 
-            // Ignore things like "java", "-jar", or ".jar"
+            // Ignore java, -jar, .jar
             if (lower.equals("java") || lower.equals("-jar") || lower.endsWith(".jar"))
                 continue;
 
+            // Case-insensitive -f / -F
             if (lower.startsWith("-f")) {
                 filename = arg.substring(2).trim();
             } else if (lower.startsWith("-t")) {
@@ -42,15 +50,7 @@ public class AppDriver {
             return;
         }
 
-        // Handle relative vs absolute file path
-        File file = new File(filename);
-        if (!file.exists()) {
-            // Try resolving relative to project root
-            file = new File(System.getProperty("user.dir"), filename);
-            filename = file.getAbsolutePath();
-        }
-
-        // Load shapes
+        // Load shapes (FileHandler handles all path resolution: relative, res/, jar, absolute)
         Shape[] shapes = FileHandler.parse(filename);
         if (shapes == null || shapes.length == 0) {
             System.out.println("❌ No shapes loaded, exiting...");
@@ -62,7 +62,7 @@ public class AppDriver {
         switch (compareType) {
             case "v": comp = new VolumeCompare(); break;
             case "a": comp = new BaseAreaCompare(); break;
-            case "h": 
+            case "h":
             default:  comp = Comparator.naturalOrder(); break;
         }
 
@@ -88,6 +88,7 @@ public class AppDriver {
 
         System.out.println("\n⏱️ Sorting completed in " + (end - start) + " ms\n");
 
+        // Print a few shapes for verification
         for (int i = 0; i < shapes.length; i++) {
             if (i == 0 || i == shapes.length - 1 || i % 1000 == 0) {
                 System.out.println(i + ": " + shapes[i]);
