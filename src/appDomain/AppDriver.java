@@ -47,14 +47,17 @@ public class AppDriver {
         System.out.println("⚙️ Sort type: " + sortType.toUpperCase());
         System.out.println("📂 File: " + filename);
 
-        // Create comparator
+        // Create comparator and sorter
         ShapeComparator comparator = new ShapeComparator(compareType);
-
-        // Sort (timer is handled inside Sorter)
         Sorter sorter = new Sorter(comparator);
+
+        // --- Start full benchmark timer ---
+        long startTime = System.currentTimeMillis();
+
+        // Sort
         sorter.sortUsing(sortType, shapes);
 
-        // Print first, last, and every exact 1000th element
+        // Print first, last, and every 1000th element in tighter three-column layout
         for (int i = 0; i < shapes.length; i++) {
             Shape s = shapes[i];
 
@@ -77,5 +80,11 @@ public class AppDriver {
             System.out.println(String.format("%-20s %-30s %s",
                     elementLabel, shapeName, valueLabel));
         }
+
+        // --- End full benchmark timer ---
+        long endTime = System.currentTimeMillis();
+
+        // Print full benchmark
+        System.out.println("\n⏱️ Total processing time (sort + display) in ms: " + (endTime - startTime));
     }
 }
