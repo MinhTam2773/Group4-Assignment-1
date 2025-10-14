@@ -87,8 +87,10 @@ public class FileHandler {
                             );
                             break;
                         case "Pyramid":
+                            // Fix: pass both side and height
                             shapes[index++] = new Pyramid(
-                                    Double.parseDouble(parts[1])
+                                    Double.parseDouble(parts[1]), // side
+                                    Double.parseDouble(parts[2])  // height
                             );
                             break;
                         case "SquarePrism":
