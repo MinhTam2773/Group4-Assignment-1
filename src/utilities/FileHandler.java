@@ -9,7 +9,7 @@ public class FileHandler {
 
     public static Shape[] parse(String fileName) {
         if (fileName == null || fileName.isEmpty()) {
-            System.out.println("❌ Invalid file name.");
+            System.out.println("Invalid file name.");
             return new Shape[0];
         }
 
@@ -58,7 +58,7 @@ public class FileHandler {
             try {
                 numShapes = Integer.parseInt(input.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.println("⚠️ Invalid number of shapes on first line.");
+                System.out.println("Invalid number of shapes on first line.");
                 return new Shape[0];
             }
 
@@ -87,10 +87,9 @@ public class FileHandler {
                             );
                             break;
                         case "Pyramid":
-                            // Now height first, side second
                             shapes[index++] = new Pyramid(
-                                Double.parseDouble(parts[1]), // height
-                                Double.parseDouble(parts[2])  // side
+                                Double.parseDouble(parts[1]),
+                                Double.parseDouble(parts[2])  
                             );
                             break;
                         case "SquarePrism":
@@ -118,19 +117,19 @@ public class FileHandler {
                             );
                             break;
                         default:
-                            System.out.println("⚠️ Unknown shape type: " + shapeType);
+                            System.out.println("Unknown shape type: " + shapeType);
                     }
                 } catch (Exception e) {
-                    System.out.println("⚠️ Invalid line: " + line);
+                    System.out.println("Invalid line: " + line);
                 }
             }
 
-            System.out.println("✅ File loaded successfully: " + index + " shapes parsed.");
+            System.out.println("File loaded successfully: " + index + " shapes parsed.");
 
             return shapes;
 
         } catch (FileNotFoundException e) {
-            System.out.println("❌ File not found: " + file.getAbsolutePath());
+            System.out.println("File not found: " + file.getAbsolutePath());
             return new Shape[0];
         }
     }
