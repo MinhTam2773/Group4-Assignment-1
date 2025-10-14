@@ -47,6 +47,7 @@ public class Sorter {
 		default:
 			System.out.println("Please choose a valid sort type");
 		}
+		System.out.println("⏱️ Sorting completed in " + (end - start) + " ms\n");
 	}
 		
 	private void bubbleSort(Shape[] shapes) {
