@@ -4,13 +4,38 @@ import comparators.ShapeComparator;
 import shapes.Shape;
 
 public class Sorter {
-	private static ShapeComparator comparator;
+	private ShapeComparator comparator;
 	
 	public Sorter(ShapeComparator comparator) {
-		Sorter.comparator = comparator;
+		this.comparator = comparator;
+	}
+	
+	public void sortUsing(String sortType, Shape[] shapes) {
+		switch(sortType) {
+		case "b": 
+//			bubbleSort(shapes);
+			break;
+		case "i": 
+//			insertionSort();
+			break;
+		case "s":
+//			selectionSort();
+			break;
+		case "m":
+//			mergeSort();
+			break;
+		case "q":
+//			quickSort();
+			break;
+		case "h":
+			heapSort(shapes);
+			break;
+		default:
+			System.out.println("Please choose a valid sort type");
+		}
 	}
 		
-	private static void bubbleSort(Double[] array) {
+	private void bubbleSort(Double[] array) {
 		
 		int n = array.length;
 		boolean swap;
@@ -33,56 +58,56 @@ public class Sorter {
 		
 	}
 	
-	private static void insertionSort() {
+	private void insertionSort() {
 		
 	}
 	
-	private static void selectionSort() {
+	private void selectionSort() {
 		
 	}
 	
-	public static void mergeSort() {
+	public void mergeSort() {
 		
 	}
 	
-	private static void quickSort() {
+	private void quickSort() {
 		
 	}
 	
-	private static void heapSort(int[] arr) {
-		buildMinHeap(arr);
+	private void heapSort(Shape[] shapes) {
+		buildMinHeap(shapes);
 		
-		for (int i = arr.length - 1; i >= 0; i--) {
-			swap(arr, 0, i);
-			minHeapify(arr, i, 0);
+		for (int i = shapes.length - 1; i >= 0; i--) {
+			swap(shapes, 0, i);
+			minHeapify(shapes, i, 0);
 		}
 	}
-	private static void buildMinHeap(int[] arr) {
-		int n = arr.length;
+	private void buildMinHeap(Shape[] shapes) {
+		int n = shapes.length;
 		for (int i = (n / 2) - 1; i >= 0; i--) {
-			minHeapify(arr, n, i);
+			minHeapify(shapes, n, i);
 		}
 	}
-	private static void minHeapify(int[] arr, int size, int i) {
+	private void minHeapify(Shape[] shapes, int size, int i) {
 		int smallest = i;
 		int left = i * 2 + 1;
 		int right = i * 2 + 2;
 		
-		if (left < size && arr[smallest] > arr[left]) {
+		if (left < size && comparator.compare(shapes[smallest], shapes[left]) > 0 ) {
 			smallest = left;
 		}
-		if (right < size && arr[smallest] > arr[right]) {
+		if (right < size && comparator.compare(shapes[smallest], shapes[right]) > 0) {
 			smallest = right;
 		}
 		
 		if (i != smallest) {
-			swap(arr, smallest, i);
-			minHeapify(arr, size, smallest);
+			swap(shapes, smallest, i);
+			minHeapify(shapes, size, smallest);
 		}
 	}
-	private static void swap(int[] arr, int i, int j) {
-		int temp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = temp;
+	private void swap(Shape[] shapes, int i, int j) {
+		Shape temp = shapes[i];
+		shapes[i] = shapes[j];
+		shapes[j] = temp;
 	}
 }

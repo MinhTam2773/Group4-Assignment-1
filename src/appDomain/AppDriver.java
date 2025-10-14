@@ -1,6 +1,7 @@
 package appDomain;
 
 import comparators.ShapeComparator;
+import shapes.Shape;
 import utilities.FileHandler;
 import utilities.Sorter;
 
@@ -31,7 +32,7 @@ public class AppDriver
 		String compareType;
 		String sortType;
 		
-		Sorter sorter;
+		Sorter sorter = null;
 		
 		for (String arg : args) {
 			if (arg.startsWith("-f")) {
@@ -40,14 +41,12 @@ public class AppDriver
 			} 
 			if (arg.startsWith("-t")) {
 				compareType = arg.substring(2); //get compareType after "-t"
-				System.out.println("\nCompare by " + compareType);
 				ShapeComparator comparator = new ShapeComparator(compareType);
 				sorter = new Sorter(comparator);
 			}
 			if (arg.startsWith("-s")) {
 				sortType = arg.substring(2); //get sortType after "-s"
-				System.out.println("Using " + sortType);
-				
+				sorter.sortUsing(sortType, new Shape[] {});
 			}
 		}
 	}
