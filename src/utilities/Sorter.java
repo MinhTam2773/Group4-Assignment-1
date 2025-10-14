@@ -21,12 +21,12 @@ public class Sorter {
 			break;
 		case "i": 
 			start = System.currentTimeMillis();
-			insertionSort(shapes);
+//			insertionSort();
 			end = System.currentTimeMillis();
 			break;
 		case "s":
 			start = System.currentTimeMillis();
-//			selectionSort();
+			selectionSort(shapes);
 			end = System.currentTimeMillis();
 			break;
 		case "m":
@@ -51,21 +51,24 @@ public class Sorter {
 	}
 		
 	private void bubbleSort(Shape[] shapes) {
-		
+		//creates shape length and bool called swap to check whether it was
 		int n = shapes.length;
 		boolean swap;
-		
+		//counts how many times it has been through the array
 		for (int i = 0; i < n-1; i++) {
 			swap = false;
+			//this loop sorts out the array (descending wise) by subtracting the array that was already sorted leaving only the non sorted arrays
 			for (int j = 0; j< n-i-1; j++) {
+				//if an array is less than the array after it it switches the spot of the array
 				if (comparator.compare(shapes[j], shapes[j + 1]) < 0) {
 					Shape temp = shapes[j];
 					shapes[j] = shapes[j+1];
 					shapes[j+1] = temp;
-					
+					//checks whether if there was a swap
 					swap = true;
 				}
 			}
+			//if the swaps end than swap detects it and breaks the for loop
 			if (!swap) {
 				break;
 			}
@@ -73,16 +76,8 @@ public class Sorter {
 		
 	}
 	
-	private void insertionSort(Shape[] shapes) {
-		int j;
+	private void insertionSort() {
 		
-		for (int i = 1; i <= shapes.length - 1; i++) {
-			j = i;
-			while (j > 0 && comparator.compare(shapes[j - 1], shapes[j]) < 0) {
-				swap(shapes, j - 1, j);
-				j--;
-			}
-		}
 	}
 	
 	private void selectionSort(Shape[] shapes) {
@@ -93,7 +88,7 @@ public class Sorter {
 
 	        for (int j = i + 1; j < n; j++) {
 	            // Use instance comparator
-	            if (comparator.compare(shapes[j], shapes[minIndex]) < 0) {
+	            if (comparator.compare(shapes[j], shapes[minIndex]) > 0) {
 	                minIndex = j;
 	            }
 	        }
@@ -165,10 +160,41 @@ public class Sorter {
 	    }
 	}
 	
-	private void quickSort() {
-		
+	private void quickSort(Shape[] shapes) {
+		if (shapes == null || shapes.length < 2) {
+			return;
+		}
+		quickSortRecursive(shapes, 0, shapes.length - 1);
 	}
 	
+	private void quickSortRecursive(Shape[] shapes, int low, int high) {
+		if (low < high) {
+			int pivotIndex = partition(shapes, low, high);
+	        quickSortRecursive(shapes, low, pivotIndex - 1);
+	        quickSortRecursive(shapes, pivotIndex + 1, high);
+		}
+		
+	}
+
+	private int partition(Shape[] shapes, int low, int high) {
+		Shape pivot = shapes[high];
+		int i = low -1;
+		
+		for (int j = low; j < high; j++) {
+	        try {
+	            if (comparator.compare(shapes[j], pivot) < 0) {
+	                i++;
+	                swap(shapes, i, j);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    swap(shapes, i + 1, high);
+	    return i + 1;
+	}
+
 	private void heapSort(Shape[] shapes) {
 		buildMinHeap(shapes);
 		
