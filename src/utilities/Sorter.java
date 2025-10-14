@@ -19,7 +19,7 @@ public class Sorter {
 //			insertionSort();
 			break;
 		case "s":
-//			selectionSort();
+			selectionSort(shapes);
 			break;
 		case "m":
 			mergeSort(shapes);
