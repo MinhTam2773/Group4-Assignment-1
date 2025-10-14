@@ -195,4 +195,8 @@ public class Sorter {
             default: return "Unknown Sort";
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> branch 'main' of https://github.com/MinhTam2773/Group4-Assignment-1
