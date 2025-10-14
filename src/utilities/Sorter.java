@@ -51,21 +51,24 @@ public class Sorter {
 	}
 		
 	private void bubbleSort(Shape[] shapes) {
-		
+		//creates shape length and bool called swap to check whether it was
 		int n = shapes.length;
 		boolean swap;
-		
+		//counts how many times it has been through the array
 		for (int i = 0; i < n-1; i++) {
 			swap = false;
+			//this loop sorts out the array (descending wise) by subtracting the array that was already sorted leaving only the non sorted arrays
 			for (int j = 0; j< n-i-1; j++) {
+				//if an array is less than the array after it it switches the spot of the array
 				if (comparator.compare(shapes[j], shapes[j + 1]) < 0) {
 					Shape temp = shapes[j];
 					shapes[j] = shapes[j+1];
 					shapes[j+1] = temp;
-					
+					//checks whether if there was a swap
 					swap = true;
 				}
 			}
+			//if the swaps end than swap detects it and breaks the for loop
 			if (!swap) {
 				break;
 			}
