@@ -137,7 +137,7 @@ public class Sorter {
 	    
 	    try {
 	    	while (i < n1 && j < n2) {
-	            if (comparator.compare(leftArr[i], rightArr[j]) > 0) {
+	            if (comparator.compare(leftArr[i], rightArr[j]) < 0) {
 	                shapes[k] = leftArr[i];
 	                i++;
 	            } else {
@@ -182,7 +182,7 @@ public class Sorter {
 		
 		for (int j = low; j < high; j++) {
 	        try {
-	            if (comparator.compare(shapes[j], pivot) > 0) {
+	            if (comparator.compare(shapes[j], pivot) < 0) {
 	                i++;
 	                swap(shapes, i, j);
 	            }
