@@ -1,54 +1,71 @@
 package appDomain;
 
-import comparators.ShapeComparator;
 import shapes.Shape;
+import comparators.ShapeComparator;
 import utilities.FileHandler;
 import utilities.Sorter;
 
-/**
- * <p>
- * This application driver code is designed to be used as a basis for the
- * Complexity and Sorting assignment that will be developed in the CPRG304 
- * F2025 class at SAIT. The implementors of this applications will be required
- * to add all the correct functionality.
- * </p>
- */
-public class AppDriver
-{
-	/**
-	 *  The main method is the entry point of the application.
-	 *  
-	 *  @param args The input to control the execution of the application.
-	 */
-	public static void main( String[] args )
-	{
-		/*
-		 * in the arugment tab in Run Configuration, try
-		 * 	-fres/shapes1.tx -theight -squicksort 
-		 * (-fres/shapes1.txt is not an allowed format according to the doc,
-		 *  it should be -f"res\shapes1.txt" )
-		 */
-		String filename;
-		String compareType;
-		String sortType;
-		
-		Sorter sorter = null;
-		
-		for (String arg : args) {
-			if (arg.startsWith("-f")) {
-				filename = arg.substring(2);//get filename after "-f"
-				FileHandler.parse(filename);
-			} 
-			if (arg.startsWith("-t")) {
-				compareType = arg.substring(2); //get compareType after "-t"
-				ShapeComparator comparator = new ShapeComparator(compareType);
-				sorter = new Sorter(comparator);
-			}
-			if (arg.startsWith("-s")) {
-				sortType = arg.substring(2); //get sortType after "-s"
-				sorter.sortUsing(sortType, new Shape[] {});
-			}
-		}
-	}
+public class AppDriver {
 
+    public static void main(String[] args) {
+        String filename = null;
+        String compareType = "h"; // default: compare by height
+        String sortType = "b";    // default: bubble sort
+
+        // Parse command-line arguments
+        for (String arg : args) {
+            if (arg == null || arg.isEmpty()) continue;
+
+            // Normalize dashes/quotes and Windows paths
+            arg = arg.replace('–', '-').replace('—', '-')
+                     .replace("\"", "").replace("“", "").replace("”", "").trim()
+                     .replace("\\", "/");
+
+            String lower = arg.toLowerCase();
+
+            // Ignore java, -jar, .jar
+            if (lower.equals("java") || lower.equals("-jar") || lower.endsWith(".jar"))
+                continue;
+
+            if (lower.startsWith("-f")) {
+                filename = arg.substring(2).trim();
+            } else if (lower.startsWith("-t")) {
+                compareType = arg.substring(2).trim().toLowerCase();
+            } else if (lower.startsWith("-s")) {
+                sortType = arg.substring(2).trim().toLowerCase();
+            }
+        }
+
+        if (filename == null || filename.isEmpty()) {
+            System.out.println("❌ Error: No input file provided. Use -f<filename>");
+            return;
+        }
+
+        filename = filename.replace("\\", "/");
+
+        // Load shapes
+        Shape[] shapes = FileHandler.parse(filename);
+        if (shapes == null || shapes.length == 0) {
+            System.out.println("❌ No shapes loaded, exiting...");
+            return;
+        }
+
+        System.out.println("📊 Compare by: " + compareType.toUpperCase());
+        System.out.println("⚙️ Sort type: " + sortType.toUpperCase());
+        System.out.println("📂 File: " + filename);
+
+        // Create comparator
+        ShapeComparator comparator = new ShapeComparator(compareType);
+        
+        // Sort
+        Sorter sorter = new Sorter(comparator);
+        sorter.sortUsing(sortType, shapes);
+
+        // Print first, last, and every 1000th shape for verification
+        for (int i = 0; i < shapes.length; i++) {
+            if (i == 0 || i == shapes.length - 1 || i % 1000 == 0) {
+                System.out.println(i + ": " + shapes[i]);
+            }
+        }
+    }
 }
