@@ -76,33 +76,30 @@ public class Sorter {
 	}
 	
 	private void selectionSort(Shape[] shapes) {
-	    int n = shapes.length;
-
-	    for (int i = 0; i < n - 1; i++) {
-	        int minIndex = i;
-
-	        for (int j = i + 1; j < n; j++) {
-<<<<<<< HEAD
-	            if (comparator.compare(shapes[j], shapes[minIndex]) < 0) {
-	                minIndex = j;
-	            }
-	        }
-
-=======
-	            // Use instance comparator
-	            if (comparator.compare(shapes[j], shapes[minIndex]) < 0) {
-	                minIndex = j;
-	            }
-	        }
-
-	        // Swap shapes[i] and shapes[minIndex] if needed
->>>>>>> branch 'Alex_R' of https://github.com/MinhTam2773/Group4-Assignment-1.git
-	        if (minIndex != i) {
-	            Shape temp = shapes[i];
-	            shapes[i] = shapes[minIndex];
-	            shapes[minIndex] = temp;
-	        }
-	    }
+//	    int n = shapes.length;
+//
+//	    for (int i = 0; i < n - 1; i++) {
+//	        int minIndex = i;
+//
+//	        for (int j = i + 1; j < n; j++) {
+//	            if (comparator.compare(shapes[j], shapes[minIndex]) < 0) {
+//	                minIndex = j;
+//	            }
+//	        }
+//
+//	            // Use instance comparator
+//	            if (comparator.compare(shapes[j], shapes[minIndex]) < 0) {
+//	                minIndex = j;
+//	            }
+//	        }
+//
+//	        // Swap shapes[i] and shapes[minIndex] if needed
+//	        if (minIndex != i) {
+//	            Shape temp = shapes[i];
+//	            shapes[i] = shapes[minIndex];
+//	            shapes[minIndex] = temp;
+//	        }
+//	    }
 	}
 	
 	public void mergeSort(Shape[] shapes) {

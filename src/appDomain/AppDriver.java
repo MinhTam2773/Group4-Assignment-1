@@ -24,19 +24,9 @@ public class AppDriver {
             if (lower.equals("java") || lower.equals("-jar") || lower.endsWith(".jar"))
                 continue;
 
-<<<<<<< HEAD
             if (lower.startsWith("-f")) filename = arg.substring(2).trim();
             else if (lower.startsWith("-t")) compareType = arg.substring(2).trim().toLowerCase();
             else if (lower.startsWith("-s")) sortType = arg.substring(2).trim().toLowerCase();
-=======
-            if (lower.startsWith("-f")) {
-                filename = arg.substring(2).trim();
-            } else if (lower.startsWith("-t")) {
-                compareType = arg.substring(2).trim().toLowerCase();
-            } else if (lower.startsWith("-s")) {
-                sortType = arg.substring(2).trim().toLowerCase();
-            }
->>>>>>> branch 'Alex_R' of https://github.com/MinhTam2773/Group4-Assignment-1.git
         }
 
         if (filename == null || filename.isEmpty()) {
@@ -53,28 +43,13 @@ public class AppDriver {
             return;
         }
 
-<<<<<<< HEAD
-=======
-        // Create comparator
-        ShapeComparator comparator;
-        switch (compareType) {
-            case "v": comparator = new ShapeComparator("V"); break;
-            case "a": comparator = new ShapeComparator("A"); break;
-            case "h":
-            default:  comparator = new ShapeComparator("H"); break; // default: height
-        }
-
->>>>>>> branch 'Alex_R' of https://github.com/MinhTam2773/Group4-Assignment-1.git
         System.out.println("📊 Compare by: " + compareType.toUpperCase());
         System.out.println("⚙️ Sort type: " + sortType.toUpperCase());
         System.out.println("📂 File: " + filename);
 
-<<<<<<< HEAD
         // Create comparator
         ShapeComparator comparator = new ShapeComparator(compareType);
 
-=======
->>>>>>> branch 'Alex_R' of https://github.com/MinhTam2773/Group4-Assignment-1.git
         // Sort
         Sorter sorter = new Sorter(comparator);
         long start = System.currentTimeMillis();
