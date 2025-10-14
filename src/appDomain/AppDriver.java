@@ -50,13 +50,11 @@ public class AppDriver {
         // Create comparator
         ShapeComparator comparator = new ShapeComparator(compareType);
 
-        // Sort with timer
+        // Sort (timer is handled inside Sorter)
         Sorter sorter = new Sorter(comparator);
-        long startTime = System.currentTimeMillis();
         sorter.sortUsing(sortType, shapes);
-        long endTime = System.currentTimeMillis();
 
-        // Print first, last, and every exact 1000th element in tighter three-column layout
+        // Print first, last, and every exact 1000th element
         for (int i = 0; i < shapes.length; i++) {
             Shape s = shapes[i];
 
@@ -69,20 +67,15 @@ public class AppDriver {
             }
 
             String elementLabel;
-            if (i == 0) elementLabel = "Firstst element is:";
+            if (i == 0) elementLabel = "First element is:";
             else if (i == shapes.length - 1) elementLabel = "Last element is:";
             else if ((i + 1) % 1000 == 0) elementLabel = (i + 1) + "th element is:";
             else continue; // skip all other elements
 
             String shapeName = "shape." + s.getClass().getSimpleName();
 
-            // Tighter three-column layout: element+is, shape, value
             System.out.println(String.format("%-20s %-30s %s",
                     elementLabel, shapeName, valueLabel));
         }
-
-        // Print benchmark at the very bottom
-        System.out.println("\n⏱️ Sorting completed in " + (endTime - startTime) + " ms using " 
-                + sorter.getSortName(sortType) + ".");
     }
 }
