@@ -20,6 +20,31 @@ import utilities.Sorter;
  */
 public class AppDriver {
 
+    /**
+     * The main entry point of the Shape Sorting Program.
+     * 
+     * <p>This method performs the following sequence of actions:
+     * <ol>
+     *   <li>Initializes a {@link appDomain.Program} object to interpret command-line input.</li>
+     *   <li>Validates that the provided arguments (input file, comparison type, sort type) are valid.</li>
+     *   <li>Loads an array of {@link shapes.Shape} objects from the input file.</li>
+     *   <li>Creates a {@link comparators.ShapeComparator} to compare shapes based on the selected metric
+     *       (height, base area, or volume).</li>
+     *   <li>Uses {@link utilities.Sorter} to perform sorting using the chosen algorithm (e.g., quicksort, heapsort, etc.).</li>
+     *   <li>Displays selected elements (first, last, every 1000th) to verify correct sorting.</li>
+     *   <li>Reports the total time taken to perform sorting, in milliseconds.</li>
+     * </ol>
+     * 
+     * @param args Command-line arguments supplied to the program. Expected format:
+     *             <ul>
+     *                 <li><b>args[0]</b> — Input filename (path to the shapes data file)</li>
+     *                 <li><b>args[1]</b> — Comparison type (<code>h</code> = height, <code>a</code> = base area, <code>v</code> = volume)</li>
+     *                 <li><b>args[2]</b> — Sorting algorithm (<code>b</code> = bubble, <code>i</code> = insertion, <code>s</code> = selection, 
+     *                     <code>m</code> = merge, <code>q</code> = quick, <code>h</code> = heap)</li>
+     *             </ul>
+     * 
+     * <p>If arguments are missing or invalid, the program prints an error message and terminates gracefully.</p>
+     */
     public static void main(String[] args) {
         // Initialize a Program instance to interpret command-line input
         Program program = new Program(args);

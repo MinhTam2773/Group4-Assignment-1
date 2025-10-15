@@ -17,7 +17,19 @@ public class Sorter<T> {
     // Comparator used to define the sorting criteria (height, area, or volume)
     private Comparator<T> comparator;
 
-    // Constructor accepts a ShapeComparator to determine how array will be compared
+    /**
+     * Constructs a new {@code Sorter} instance using the specified comparator
+     * to define how elements in an array will be compared and ordered.
+     *
+     * <p>This constructor allows the sorting behavior to be customized for
+     * different comparison strategies — for example, sorting shapes by height,
+     * base area, or volume. The provided comparator determines the logic used
+     * during sorting.</p>
+     *
+     * @param comparator the {@link Comparator} used to compare elements during sorting.
+     *                   Must not be {@code null}, otherwise a {@code NullPointerException}
+     *                   may occur when performing comparisons.
+     */
     public Sorter(Comparator<T> comparator) {
         this.comparator = comparator;
     }

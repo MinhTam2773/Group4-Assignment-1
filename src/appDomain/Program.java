@@ -21,7 +21,30 @@ public class Program {
     // Sorting algorithm type (default is "b" for bubble sort)
     private String sortType = "b";
 
-    // Constructor: immediately processes the provided command-line arguments
+    /**
+     * Constructs a new {@code Program} instance and immediately processes
+     * the provided command-line arguments.
+     *
+     * <p>This constructor delegates to the {@link #parseArgs(String[])} method,
+     * which extracts the input file name, comparison type, and sorting type
+     * from the given arguments. It also normalizes and sanitizes the input
+     * to handle variations in dashes, quotes, and case sensitivity.</p>
+     *
+     * @param args the command-line arguments passed to the application.
+     *             Expected format:
+     *             <ul>
+     *               <li><b>-f&lt;filename&gt;</b> — specifies the input data file</li>
+     *               <li><b>-t&lt;type&gt;</b> — comparison type
+     *                   (<code>h</code> = height, <code>a</code> = area, <code>v</code> = volume)</li>
+     *               <li><b>-s&lt;sort&gt;</b> — sorting algorithm
+     *                   (<code>b</code> = bubble, <code>i</code> = insertion,
+     *                    <code>s</code> = selection, <code>m</code> = merge,
+     *                    <code>q</code> = quick, <code>h</code> = heap)</li>
+     *             </ul>
+     *
+     * <p>If any argument is missing or malformed, defaults are applied:
+     * height comparison (<code>h</code>) and bubble sort (<code>b</code>).</p>
+     */
     public Program(String[] args) {
         parseArgs(args);
     }
